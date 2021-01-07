@@ -1,11 +1,13 @@
 var winner = '';
 var ai_playing = false;
+
+//Set Initial Display Text
 $('#display').text('Your Turn');
 
 //Cell Left Click Event
 $('.col-xs-2').click(function(){
 	var cells = $('#board .col-xs-2');
-	//If there is no winner yet, the AI is not playing, and the cell is not marked X or O
+	//If there is no winner yet AND the AI is not playing AND the cell is not marked X or O
 	if (!winner && !ai_playing && !$(this).text()){
 		$(this).text('X');
 		if (check_winner(get_cell_vals(cells))){
@@ -21,6 +23,7 @@ $('.col-xs-2').click(function(){
 //Reset Button
 $('#b_reset').click(reset_board);
 
+//Checks to see if any blank cells exist
 function blank_cell_exists(){
 	for (cell of $('#board .col-xs-2')){
 		if (!$(cell).text()){
@@ -29,13 +32,7 @@ function blank_cell_exists(){
 	};
 };
 
-/*Fill Cell
-function fill_cell(cell, value){
-	if (!winner && !ai_playing && $(this).text() != 'O'){
-		$(cell).text(value);
-	};
-};*/
-
+//Initiates AI's Turn
 function ai_start_play(){
 	ai_playing = true;
 	$('#display').text('AI Playing');
@@ -43,8 +40,8 @@ function ai_start_play(){
 	setTimeout(ai_play, delay);
 }
 
+//AI Plays a Hand
 function ai_play(){
-	//AI code here
 	var cells = $('#board .col-xs-2');
 	
 	//Check if marking any cell would win the game for the AI
@@ -89,6 +86,7 @@ function ai_play(){
 	};
 }
 
+//Declare Game Over
 function game_over(player){
 	if (player) {
 		//Set winner
@@ -111,10 +109,6 @@ function game_over(player){
 	};
 };
 
-/*function declare_draw(){
-	$('#display').text("It's a draw!");
-};*/
-
 //Reset Board
 function reset_board(){
 	$('.col-xs-2').each(function(){
@@ -124,6 +118,7 @@ function reset_board(){
 	winner = '';
 };
 
+//Get a List of All Cell Values
 function get_cell_vals(cells){
 	//get all cell values
 	var vals = []
